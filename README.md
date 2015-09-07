@@ -6,6 +6,4 @@ It is based on the [project assets](http://github.com/udacity/frontend-nanodegre
 
 An additional test is called "Change Feed"
 
-References:
-http://stackoverflow.com/questions/9425158/jasmine-cant-trigger-click-event
-
+See references.txt for resources used.
