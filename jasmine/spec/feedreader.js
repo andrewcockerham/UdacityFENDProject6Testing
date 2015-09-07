@@ -58,7 +58,7 @@ $(function() {
 		 * hiding/showing of the menu element.
 		 */
 		it('is hidden by default', function() {
-			expect($(".menu-hidden").length).toBeGreaterThan(0);
+			expect($('.menu-hidden').length).toBeGreaterThan(0);
 		});
 
 		/* TODO: Write a test that ensures the menu changes
@@ -67,12 +67,13 @@ $(function() {
 		 * clicked and does it hide when clicked again.
 		 */
 		it('toggles on icon click', function() {
-			var btn = $(".menu-icon-link");
+			var btn = $('.menu-icon-link');
 			btn.click(); // open menu
-			expect($(".menu-hidden").length).toBe(0);
+			expect($('.menu-hidden').length).toBe(0);
 			btn.click(); // return menu to hidden state
-			expect($(".menu-hidden").length).toBe(1);
+			expect($('.menu-hidden').length).toBe(1);
 		});
+
 	});
 
 	/* TODO: Write a new test suite named "Initial Entries" */
@@ -83,17 +84,16 @@ $(function() {
 		 * Remember, loadFeed() is asynchronous so this test wil require
 		 * the use of Jasmine's beforeEach and asynchronous done() function.
 		 */
-		 var myfeed = $('.feed');
+		var myfeed = $('.feed');
 
-		 beforeEach(function(done) {
+		beforeEach(function(done) {
 			loadFeed(0, done);
-		 });
+		});
 
-		 it('loads an entry element', function(done) {
-		 	expect(myfeed.find('.entry').length).toBeGreaterThan(0);
-		 	// expect($('.entry').length).toBeGreaterThan(0);
-		 	done();
-		 });
+		it('loads an entry element', function(done) {
+			expect(myfeed.find('.entry').length).toBeGreaterThan(0);
+			done();
+		});
 	});
 
 	/* TODO: Write a new test suite named "New Feed Selection" */
@@ -109,8 +109,28 @@ $(function() {
 		});
 
 		it('changes content when feed is loaded',function(done) {
-	 		expect(myfeedlist.children().length).toBeGreaterThan(0);
+			expect(myfeedlist.children().length).toBeGreaterThan(0);
 			done();
 		});
 	});
+
+	/* Additional Tests */
+	/* When load another feed, the content changes to show that feed */
+	describe('Change Feed', function() {
+		var title;
+
+		beforeEach(function(done) {
+			title = $('.header-title')[0].innerHTML;
+			loadFeed(1, done);
+		});
+
+		// that content changes so title is different
+		it('changes feed when clicked in menu', function(done) {
+			var newtitle = $('.header-title')[0].innerHTML;
+			expect(title).not.toEqual(newtitle);
+			done();
+			loadFeed(0); // return back to first feed
+		});
+	});
+
 }());
