@@ -25,6 +25,7 @@ $(function() {
 			expect(allFeeds).toBeDefined();
 			expect(allFeeds.length).not.toBe(0);
 		});
+
 		/* TODO: Write a test that loops through each feed
 		 * in the allFeeds object and ensures it has a URL defined
 		 * and that the URL is not empty.
@@ -59,6 +60,7 @@ $(function() {
 		it('is hidden by default', function() {
 			expect($(".menu-hidden").length).toBeGreaterThan(0);
 		});
+
 		/* TODO: Write a test that ensures the menu changes
 		 * visibility when the menu icon is clicked. This test
 		 * should have two expectations: does the menu display when
@@ -92,23 +94,23 @@ $(function() {
 		 	// expect($('.entry').length).toBeGreaterThan(0);
 		 	done();
 		 });
-
-
 	});
+
 	/* TODO: Write a new test suite named "New Feed Selection" */
 	describe('New Feed Selection', function() {
 		/* TODO: Write a test that ensures when a new feed is loaded
 		 * by the loadFeed function that the content actually changes.
 		 * Remember, loadFeed() is asynchronous.
 		 */
+		var myfeedlist = $('.feed-list');
 
 		beforeEach(function(done) {
 			loadFeed(0, done);
 		});
 
-		 it('',function() {
-
-		 });
-
+		it('changes content when feed is loaded',function(done) {
+	 		expect(myfeedlist.children().length).toBeGreaterThan(0);
+			done();
+		});
 	});
 }());
