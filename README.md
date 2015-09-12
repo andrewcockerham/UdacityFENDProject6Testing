@@ -6,6 +6,6 @@ It is based on the [project assets](http://github.com/udacity/frontend-nanodegre
 
 Open `index.html` and the tests will run automagically. See the Jasmine section at the bottom for test results.
 
-An additional test is called "Add Feeds to list" that tests that DOM content is uploaded when new feed is loaded.
+An additional test is called "Add Feeds to list" that tests that feeds are added to the list in the menu.
 
 See references.txt for resources used.
