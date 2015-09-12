@@ -69,9 +69,11 @@ $(function() {
 		it('toggles on icon click', function() {
 			var btn = $('.menu-icon-link');
 			btn.click(); // open menu
-			expect($('.menu-hidden').length).toBe(0);
+			expect($('body').hasClass('menu-hidden')).toBe(false);
+			// expect($('.menu-hidden').length).toBe(0);
 			btn.click(); // return menu to hidden state
-			expect($('.menu-hidden').length).toBe(1);
+			expect($('body').hasClass('menu-hidden')).toBe(true);
+			// expect($('.menu-hidden').length).toBe(1);
 		});
 
 	});
@@ -84,14 +86,14 @@ $(function() {
 		 * Remember, loadFeed() is asynchronous so this test wil require
 		 * the use of Jasmine's beforeEach and asynchronous done() function.
 		 */
-		var myfeed = $('.feed');
+		var myFeed = $('.feed');
 
 		beforeEach(function(done) {
 			loadFeed(0, done);
 		});
 
 		it('loads an entry element', function(done) {
-			expect(myfeed.find('.entry').length).toBeGreaterThan(0);
+			expect(myFeed.find('.entry').length).toBeGreaterThan(0);
 			done();
 		});
 	});
@@ -102,34 +104,40 @@ $(function() {
 		 * by the loadFeed function that the content actually changes.
 		 * Remember, loadFeed() is asynchronous.
 		 */
-		var myfeedlist = $('.feed-list');
+		var feed;
+
+		beforeEach(function(done) {
+			$('.feed').empty();
+			loadFeed(0, function() {
+				feed = $('.feed').html();
+				loadFeed(1, function() {
+					done();
+				});
+			});
+		});
+
+		it('changes feed when clicked in menu', function() {
+			expect(feed).not.toEqual($('.feed').html());
+		});
+
+		afterEach(function() {
+			loadFeed(0); // return back to first feed
+		});
+
+	});
+
+	/* Additional Tests */
+	/* Check that loadFeed adds feeds to the list of feeds in the menu */
+	describe('Add Feeds to list', function() {
+		var myFeedList = $('.feed-list');
 
 		beforeEach(function(done) {
 			loadFeed(0, done);
 		});
 
-		it('changes content when feed is loaded',function(done) {
-			expect(myfeedlist.children().length).toBeGreaterThan(0);
+		it('adds feeds to menu list',function(done) {
+			expect(myFeedList.children().length).toBeGreaterThan(0);
 			done();
-		});
-	});
-
-	/* Additional Tests */
-	/* When load another feed, the content changes to show that feed */
-	describe('Change Feed', function() {
-		var title;
-
-		beforeEach(function(done) {
-			title = $('.header-title')[0].innerHTML;
-			loadFeed(1, done);
-		});
-
-		// that content changes so title is different
-		it('changes feed when clicked in menu', function(done) {
-			var newtitle = $('.header-title')[0].innerHTML;
-			expect(title).not.toEqual(newtitle);
-			done();
-			loadFeed(0); // return back to first feed
 		});
 	});
 
